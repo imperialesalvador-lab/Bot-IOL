@@ -1,5 +1,13 @@
 import os, time, requests, datetime
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import os
 
+def keep_alive():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(('0.0.0.0', port), BaseHTTPRequestHandler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+keep_alive()
 # CONFIGURACION FINAL
 MONTO_POR_TIRO = 700000
 MAX_EN_CANCHA = 5
